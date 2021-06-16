@@ -9,9 +9,9 @@ import java.util.concurrent.Executors;
 
 public class FGPlayer {
     // field
-    Socket fg;
-    PrintWriter out;
-    ExecutorService pool;
+    private Socket fg;
+    private PrintWriter out;
+    private ExecutorService pool;
 
     public FGPlayer(String host, int port) {
         try {
@@ -31,7 +31,7 @@ public class FGPlayer {
         return this.out;
     }
 
-    public ExecutorService getpool() {
+    public ExecutorService getPool() {
         return this.pool;
     }
 

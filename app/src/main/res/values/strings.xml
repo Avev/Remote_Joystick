@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Remote_Joystick</string>
+    <string name="IP">IP Address</string>
+    <string name="Port">Port</string>
 </resources>
