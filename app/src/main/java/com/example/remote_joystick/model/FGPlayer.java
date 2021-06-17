@@ -7,32 +7,32 @@ import java.net.Socket;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class FGPlayer {
     // field
     private Socket fg;
     private PrintWriter out;
     private ExecutorService pool;
+    Future<?> futurePool;
 
     /**
-     * constructor, creates a socket and connect to fg server and opens a threadpool
-     * @param host server ip
-     * @param port server port
+     * constructor
      */
-    public FGPlayer(String host, int port) {
-        try {
-            this.pool = Executors.newFixedThreadPool(1);
-            this.pool.execute( () -> {
-                try {
-                    this.fg = new Socket(host, port);
-                    this.out = new PrintWriter(this.fg.getOutputStream(), true);
-                } catch (IOException e) {
-                    System.out.println("Socket failed");
-                }
-            });
-        } catch (Exception e) {
-            System.out.println("failed to create a thread pool");
-        }
+    public FGPlayer() {
+        this.pool = Executors.newFixedThreadPool(1);
+    }
+
+    public void connect(String host, int port) {
+        this.futurePool = this.pool.submit(() -> {
+            this.fg = new Socket(host, port);
+            this.out = new PrintWriter(this.fg.getOutputStream(), true);
+            return null;
+        });
+    }
+
+    public Future<?> getFuturePool() {
+        return this.futurePool;
     }
 
     public Socket getFG() {
