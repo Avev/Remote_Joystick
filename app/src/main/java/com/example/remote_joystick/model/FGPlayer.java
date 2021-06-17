@@ -13,13 +13,18 @@ public class FGPlayer {
     private PrintWriter out;
     private ExecutorService pool;
 
+    /**
+     * constructor, creates a socket and connect to fg server and opens a threadpool
+     * @param host server ip
+     * @param port server port
+     */
     public FGPlayer(String host, int port) {
         try {
             this.fg = new Socket(host, port);
             this.out = new PrintWriter(this.fg.getOutputStream(), true);
             this.pool = Executors.newFixedThreadPool(1);
         } catch (Exception e) {
-            System.out.println("Failed opening socket");
+            System.out.println("connective to FlightGear failed");
         }
     }
 
