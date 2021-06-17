@@ -1,5 +1,6 @@
 package com.example.remote_joystick.model;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Executable;
 import java.net.Socket;
@@ -20,11 +21,17 @@ public class FGPlayer {
      */
     public FGPlayer(String host, int port) {
         try {
-            this.fg = new Socket(host, port);
-            this.out = new PrintWriter(this.fg.getOutputStream(), true);
             this.pool = Executors.newFixedThreadPool(1);
+            this.pool.execute( () -> {
+                try {
+                    this.fg = new Socket(host, port);
+                    this.out = new PrintWriter(this.fg.getOutputStream(), true);
+                } catch (IOException e) {
+                    System.out.println("Socket failed");
+                }
+            });
         } catch (Exception e) {
-            System.out.println("connective to FlightGear failed");
+            System.out.println("failed to create a thread pool");
         }
     }
 

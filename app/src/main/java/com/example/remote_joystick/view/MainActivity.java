@@ -3,6 +3,8 @@ package com.example.remote_joystick.view;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
 
@@ -14,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     private FGPlayer fg;
     private EditText IP;
     private EditText port;
+    private Button connectButton;
     private SeekBar throttleSeekBar;
     private SeekBar rudderSeekBar;
     private Joystick joystick;
@@ -25,9 +28,12 @@ public class MainActivity extends AppCompatActivity {
 
         IP = findViewById(R.id.editTextIP);
         port = findViewById(R.id.editTextPort);
+        connectButton = findViewById(R.id.connectButton);
         throttleSeekBar = findViewById(R.id.rudderSeekBar);
         rudderSeekBar = findViewById(R.id.throttleSeekBar);
 
+        connectButton.setOnClickListener(v -> fg = new FGPlayer(IP.getText().toString(),
+                Integer.parseInt(port.getText().toString())));
 
         throttleSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override

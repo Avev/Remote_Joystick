@@ -4,4 +4,5 @@
     <string name="Port">Port</string>
     <string name="Rudder">Rudder</string>
     <string name="Throttle">Throttle</string>
+    <string name="Connect">Connect</string>
 </resources>
