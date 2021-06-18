@@ -24,8 +24,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText IP;
     private EditText port;
     private Button connectButton;
-    private SeekBar throttleSeekBar;
     private SeekBar rudderSeekBar;
+    private SeekBar throttleSeekBar;
     private Joystick joystick;
 
     @Override
@@ -37,8 +37,8 @@ public class MainActivity extends AppCompatActivity {
         IP = findViewById(R.id.editTextIP);
         port = findViewById(R.id.editTextPort);
         connectButton = findViewById(R.id.connectButton);
-        throttleSeekBar = findViewById(R.id.rudderSeekBar);
-        rudderSeekBar = findViewById(R.id.throttleSeekBar);
+        rudderSeekBar = findViewById(R.id.rudderSeekBar);
+        throttleSeekBar = findViewById(R.id.throttleSeekBar);
 
         connectButton.setOnClickListener(v -> {
             viewModel = new ViewModel();
@@ -61,8 +61,8 @@ public class MainActivity extends AppCompatActivity {
         rudderSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                progress -= 1;
-                viewModel.setRudder((double)progress / 100);
+                double progress2 = (double)progress / 50;
+                viewModel.setRudder(progress2 - 1);
             }
 
             @Override

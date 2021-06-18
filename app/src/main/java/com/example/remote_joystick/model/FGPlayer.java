@@ -50,25 +50,25 @@ public class FGPlayer {
     public void insertTask(String type, double value) {
         if (type.equals("aileron")) {
             this.pool.execute( () -> {
-                this.out.print("set/controls/flight/aileron " + value + "\r\n");
+                this.out.print("set /controls/flight/aileron " + value + "\r\n");
                 this.out.flush();
             });
         }
         if (type.equals("elevator")) {
             this.pool.execute( () -> {
-                this.out.print("set/controls/flight/elevator " + value + "\r\n");
+                this.out.print("set /controls/flight/elevator " + value + "\r\n");
                 this.out.flush();
             });
         }
         if (type.equals("rudder")) {
             this.pool.execute( () -> {
-                this.out.print("set/controls/flight/rudder " + value + "\r\n");
+                this.out.print("set /controls/flight/rudder " + value + "\r\n");
                 this.out.flush();
             });
         }
         if (type.equals("throttle")) {
             this.pool.execute( () -> {
-                this.out.print("set/controls/engines/current-engine/throttle " + value + "\r\n");
+                this.out.print("set /controls/engines/current-engine/throttle " + value + "\r\n");
                 this.out.flush();
             });
         }
