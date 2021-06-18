@@ -3,6 +3,7 @@ package com.example.remote_joystick.view;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.Layout;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,12 +11,16 @@ import android.widget.SeekBar;
 
 import com.example.remote_joystick.R;
 import com.example.remote_joystick.model.FGPlayer;
+import com.example.remote_joystick.view_Model.ViewModel;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
 
-    private FGPlayer fg;
+//    private FGPlayer fg;
+    private androidx.constraintlayout.widget.ConstraintLayout mainLayout;
+    private ViewModel viewModel;
     private EditText IP;
     private EditText port;
     private Button connectButton;
@@ -28,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mainLayout = findViewById(R.id.mainLayout);
         IP = findViewById(R.id.editTextIP);
         port = findViewById(R.id.editTextPort);
         connectButton = findViewById(R.id.connectButton);
@@ -35,14 +41,20 @@ public class MainActivity extends AppCompatActivity {
         rudderSeekBar = findViewById(R.id.throttleSeekBar);
 
         connectButton.setOnClickListener(v -> {
-            fg = new FGPlayer();
-            fg.connect(IP.getText().toString(),
+            viewModel = new ViewModel();
+            viewModel.connect(IP.getText().toString(),
                     Integer.parseInt(port.getText().toString()));
             try {
-                fg.getFuturePool().get();
+                viewModel.getFuturePool().get();
             } catch (Exception e) {
                 // need to pop a message saying to try again to connect
-                System.out.println("socket failed");
+                Snackbar.make(mainLayout, "Connect failed, please try again",
+                       Snackbar.LENGTH_LONG)
+                        .setAction("close", v1 -> {
+
+                        })
+                        .setActionTextColor(getResources().getColor(R.color.white))
+                        .show();
             }
         });
 
@@ -50,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 progress -= 1;
-                fg.insertTask("rudder", (double)progress / 100);
+                viewModel.setRudder((double)progress / 100);
             }
 
             @Override
@@ -67,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         throttleSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                fg.insertTask("throttle", (double)progress / 100);
+                viewModel.setThrottle((double)progress / 100);
             }
 
             @Override
