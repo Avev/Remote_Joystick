@@ -39,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
         connectButton = findViewById(R.id.connectButton);
         rudderSeekBar = findViewById(R.id.rudderSeekBar);
         throttleSeekBar = findViewById(R.id.throttleSeekBar);
+//        joystick = findViewById(R.id.joystick);
+
+
 
         connectButton.setOnClickListener(v -> {
             viewModel = new ViewModel();
