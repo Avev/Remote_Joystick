@@ -18,7 +18,7 @@ import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
 
-//    private FGPlayer fg;
+    // field
     private androidx.constraintlayout.widget.ConstraintLayout mainLayout;
     private ViewModel viewModel;
     private EditText IP;
@@ -27,32 +27,55 @@ public class MainActivity extends AppCompatActivity {
     private SeekBar rudderSeekBar;
     private SeekBar throttleSeekBar;
     private Joystick joystick;
+    public static boolean isConnected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // field initialized
+        isConnected = false;
+        viewModel = new ViewModel();
         mainLayout = findViewById(R.id.mainLayout);
         IP = findViewById(R.id.editTextIP);
         port = findViewById(R.id.editTextPort);
         connectButton = findViewById(R.id.connectButton);
         rudderSeekBar = findViewById(R.id.rudderSeekBar);
         throttleSeekBar = findViewById(R.id.throttleSeekBar);
-//        joystick = findViewById(R.id.joystick);
+        joystick = findViewById(R.id.joystick);
 
-
-
+        // when connect button is used
         connectButton.setOnClickListener(v -> {
-            viewModel = new ViewModel();
-            viewModel.connect(IP.getText().toString(),
-                    Integer.parseInt(port.getText().toString()));
-            try {
-                viewModel.getFuturePool().get();
-            } catch (Exception e) {
-                // need to pop a message saying to try again to connect
-                Snackbar.make(mainLayout, "Connect failed, please try again",
-                       Snackbar.LENGTH_LONG)
+            String IPString = IP.getText().toString();
+            String portString = port.getText().toString();
+
+            // if both text fields are not empty
+            if (!IPString.isEmpty() && !portString.isEmpty()) {
+                viewModel.connect(IPString,
+                        Integer.parseInt(portString));
+                try {
+                    viewModel.getFuturePool().get();
+
+                    // gets here only if connecting succeeded
+                    isConnected = true;
+
+                    // if failed to connect shows a failed message in a snackbar
+                } catch (Exception e) {
+                    Snackbar.make(mainLayout, "Connect failed, please try again",
+                            Snackbar.LENGTH_LONG)
+                            .setAction("close", v1 -> {
+
+                            })
+                            .setActionTextColor(getResources().getColor(R.color.white))
+                            .show();
+                }
+            }
+
+            // if one of the fields is empty shows a message in snackbar
+            else {
+                Snackbar.make(mainLayout, "IP/Port field is empty",
+                        Snackbar.LENGTH_LONG)
                         .setAction("close", v1 -> {
 
                         })
@@ -61,11 +84,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // when joystick is used
+        joystick.setOnTouchListener((v, event) -> {
+            joystick.onMove = (a, e) -> {
+                viewModel.setAileron(a);
+                viewModel.setElevator(e);
+            };
+            return false;
+        });
+
+        // when rudder seekbar is used
         rudderSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 double progress2 = (double)progress / 50;
-                viewModel.setRudder(progress2 - 1);
+                if (isConnected) {
+                    viewModel.setRudder(progress2 - 1);
+                }
             }
 
             @Override
@@ -79,10 +114,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // when throttle seekbar is used
         throttleSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                viewModel.setThrottle((double)progress / 100);
+                if (isConnected) {
+                    viewModel.setThrottle((double)progress / 100);
+                }
             }
 
             @Override

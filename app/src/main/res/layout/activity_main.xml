@@ -56,8 +56,8 @@
         android:id="@+id/throttleSeekBar"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="270dp"
-        android:layout_marginRight="270dp"
+        android:layout_marginEnd="280dp"
+        android:layout_marginRight="280dp"
         android:layout_marginBottom="180dp"
         android:max="100"
         android:orientation="vertical"
@@ -86,8 +86,8 @@
         android:id="@+id/throttleTextView"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="320dp"
-        android:layout_marginRight="320dp"
+        android:layout_marginEnd="330dp"
+        android:layout_marginRight="330dp"
         android:layout_marginBottom="25dp"
         android:rotation="270"
         android:scaleX="1.5"
@@ -110,6 +110,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextPort" />
+
+    <com.example.remote_joystick.view.Joystick
+        android:id="@+id/joystick"
+        android:layout_width="330dp"
+        android:layout_height="330dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="44dp"
+        app:layout_constraintBottom_toTopOf="@+id/rudderSeekBar"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
