@@ -8,7 +8,8 @@
 ## Installation
 1. Clone the project and open it in Android studio.  
 2. Click the run button or shift+f10 and the emulator will come up with the app running.  
-3. Download and open FlightGear, in the ```Settings``` under ```Additional Settings``` type the following: **--telnet=socket,in,10,127.0.0.1,6400,tcp**  
+3. Download and open FlightGear, in the ```Settings``` under ```Additional Settings``` type the following:  
+**--telnet=socket,in,10,127.0.0.1,6400,tcp**  
 4. Click on ```Fly!``` and go back to the emulator.  
 5. type your IP address in the IP field and 6400 in the Port field and click on the connect button, now you are connected to the FlightGear and can control the plane as you please.
 
