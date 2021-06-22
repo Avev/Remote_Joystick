@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
         rudderSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                double progress2 = (double)progress / 50;
+                double progress2 = (double)progress / 100;
                 if (isConnected) {
                     viewModel.setRudder(progress2 - 1);
                 }
