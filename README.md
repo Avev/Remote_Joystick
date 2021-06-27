@@ -1,7 +1,7 @@
 # Advanced Programming 2 - Remote Joystick Android App
 
 ### Video
-[Link]()
+[Link](https://www.youtube.com/watch?v=yg5fKyuen-A)
 ### Presentation
 [Link](https://docs.google.com/presentation/d/1dNqXR-WDkC7wD7cAM686fICon1QRNp4byhB73whBs04/edit?usp=sharing)
 
